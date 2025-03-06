@@ -1,0 +1,540 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Solo Leveling - Episode 4 - Aniverse</title>
+    <link rel="stylesheet" href="../../style.css">
+    <link rel="stylesheet" href="../../player.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        /* Anpassung der Abstände */
+        main.player-page {
+            padding-top: 120px; /* Erhöhter Abstand von der Navigation */
+            max-width: 1400px;
+            margin: 0 auto;
+            padding-left: 4rem;
+            padding-right: 4rem;
+        }
+
+        .video-container {
+            margin-top: 40px; 
+            margin-bottom: 40px; 
+            position: relative;
+            width: 100%;
+            max-width: 1400px;
+            margin-left: auto;
+            margin-right: auto;
+            background: #000;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.7); 
+        }
+
+        .video-wrapper {
+            position: relative;
+            padding-bottom: 56.25%; 
+            height: 0;
+            overflow: hidden;
+        }
+
+        .video-wrapper video {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: #000;
+        }
+
+        .custom-controls {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(transparent, rgba(0, 0, 0, 0.8));
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+
+        .video-wrapper:hover .custom-controls {
+            opacity: 1;
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 4px;
+            background: rgba(255, 255, 255, 0.2);
+            cursor: pointer;
+            position: relative;
+            border-radius: 2px;
+        }
+
+        .progress-filled {
+            height: 100%;
+            background: #e50914;
+            width: 0;
+            border-radius: 2px;
+            transition: width 0.1s linear;
+        }
+
+        .controls-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            color: white;
+        }
+
+        .left-controls, .right-controls {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .control-btn {
+            background: none;
+            border: none;
+            color: white;
+            cursor: pointer;
+            padding: 5px;
+            font-size: 18px;
+            transition: color 0.2s;
+        }
+
+        .control-btn:hover {
+            color: #e50914;
+        }
+
+        .volume-control {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .volume-slider {
+            width: 80px;
+            height: 4px;
+            -webkit-appearance: none;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 2px;
+            outline: none;
+        }
+
+        .volume-slider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            width: 12px;
+            height: 12px;
+            background: white;
+            border-radius: 50%;
+            cursor: pointer;
+        }
+
+        .time-display {
+            font-size: 14px;
+            font-family: monospace;
+        }
+
+        .episode-info {
+            padding: 40px 20px; /* Mehr Padding */
+            color: white;
+            margin-top: 30px; /* Zusätzlicher Abstand */
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 8px;
+        }
+
+        .episode-info h1 {
+            font-size: 2rem; /* Größere Überschrift */
+            margin-bottom: 20px;
+            color: #e50914;
+        }
+
+        .episode-info p {
+            color: #e5e5e5;
+            font-size: 1.1rem; /* Größere Schrift */
+            line-height: 1.6;
+        }
+
+        .episode-navigation {
+            display: flex;
+            justify-content: space-between;
+            padding: 30px 20px;
+            margin-top: 40px;
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 8px;
+        }
+
+        .nav-btn {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: white;
+            text-decoration: none;
+            padding: 10px 20px;
+            border-radius: 4px;
+            background: rgba(255, 255, 255, 0.1);
+            transition: background 0.3s;
+        }
+
+        .nav-btn:hover {
+            background: rgba(229, 9, 20, 0.6);
+        }
+
+        /* Neue Styles für die Skip-Buttons */
+        .rewind, .forward {
+            position: relative;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.1);
+            transition: all 0.3s ease;
+            margin: 0 5px;
+        }
+
+        .rewind:hover, .forward:hover {
+            background: rgba(229, 9, 20, 0.6);
+            transform: scale(1.1);
+        }
+
+        .skip-text {
+            font-size: 12px;
+            position: absolute;
+            bottom: -18px;
+            left: 50%;
+            transform: translateX(-50%);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            color: #fff;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+        }
+
+        .rewind:hover .skip-text, 
+        .forward:hover .skip-text {
+            opacity: 1;
+        }
+
+        .rewind i, .forward i {
+            font-size: 16px;
+            transition: transform 0.3s ease;
+        }
+
+        .rewind:hover i {
+            transform: rotate(-30deg);
+        }
+
+        .forward:hover i {
+            transform: rotate(30deg);
+        }
+
+        /* Anpassung der Abstände für die neuen Buttons */
+        .left-controls {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .control-btn {
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            transition: all 0.3s ease;
+        }
+
+        /* Füge die neuen Styles für Stream-Optionen hinzu */
+        .stream-options {
+            padding: 20px;
+            color: white;
+            margin-top: 20px;
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 8px;
+        }
+
+        .stream-options h2 {
+            font-size: 1.2rem;
+            margin-bottom: 15px;
+            color: #e50914;
+        }
+
+        .stream-buttons {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .stream-btn {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 1rem;
+        }
+
+        .stream-btn:hover {
+            background: rgba(229, 9, 20, 0.6);
+            transform: translateY(-2px);
+        }
+
+        .stream-btn:active {
+            transform: translateY(0);
+        }
+
+        header {
+            background: linear-gradient(to bottom, rgba(0,0,0,0.9) 60%, transparent);
+            padding: 1.5rem 0;
+            position: fixed;
+            width: 100%;
+            z-index: 1000;
+        }
+
+        /* Responsive Anpassungen */
+        @media (max-width: 768px) {
+            main.player-page {
+                padding-top: 100px;
+                padding-left: 1rem;
+                padding-right: 1rem;
+            }
+
+            .video-container {
+                margin-top: 20px;
+                margin-bottom: 20px;
+            }
+
+            .episode-info {
+                padding: 20px;
+            }
+
+            .episode-info h1 {
+                font-size: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav>
+            <a href="../../index.html" style="text-decoration: none;">
+                <div class="logo">Aniverse</div>
+            </a>
+            <ul>
+                <li><a href="../../index.html">Home</a></li>
+                <li><a href="../../#serien">Serien</a></li>
+                <li><a href="../../#filme">Filme</a></li>
+                <li><a href="../../#neu">Neu</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main class="player-page">
+        <div class="video-container">
+            <div class="video-wrapper">
+                <video id="mainPlayer" controlsList="nodownload" oncontextmenu="return false;">
+                    <source src="https://maxfinishseveral.com/e/rgdk1efw7tn3" type="video/mp4">
+                    Dein Browser unterstützt das Video-Element nicht.
+                </video>
+                <div class="custom-controls">
+                    <div class="progress-bar">
+                        <div class="progress-filled"></div>
+                    </div>
+                    <div class="controls-row">
+                        <div class="left-controls">
+                            <button class="control-btn play-pause" title="Play/Pause">
+                                <i class="fas fa-play"></i>
+                            </button>
+                            <button class="control-btn rewind" title="10 Sekunden zurück">
+                                <i class="fas fa-rotate-left"></i>
+                                <span class="skip-text">-10s</span>
+                            </button>
+                            <button class="control-btn forward" title="10 Sekunden vor">
+                                <i class="fas fa-rotate-right"></i>
+                                <span class="skip-text">+10s</span>
+                            </button>
+                            <div class="volume-control">
+                                <button class="control-btn volume" title="Lautstärke">
+                                    <i class="fas fa-volume-up"></i>
+                                </button>
+                                <input type="range" class="volume-slider" min="0" max="1" step="0.1" value="1" title="Lautstärkeregler">
+                            </div>
+                            <span class="time-display">0:00 / 0:00</span>
+                        </div>
+                        <div class="right-controls">
+                            <button class="control-btn quality" title="Qualität">
+                                <i class="fas fa-cog"></i>
+                            </button>
+                            <button class="control-btn fullscreen" title="Vollbild">
+                                <i class="fas fa-expand"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="episode-info">
+            <h1>Solo Leveling - Episode 4: Ich muss stärker werden</h1>
+            <p>Sung Jin-Woo beginnt sein Training und lernt, seine neuen Fähigkeiten zu kontrollieren.</p>
+            
+            <div class="movie-meta">
+                <div class="meta-item">
+                    <i class="fas fa-clock"></i>
+                    <span>Länge: 24 Minuten</span>
+                </div>
+                <div class="meta-item">
+                    <i class="fas fa-star"></i>
+                    <span>FSK: 16</span>
+                </div>
+                <div class="meta-item">
+                    <i class="fas fa-language"></i>
+                    <span>Sprache: Deutsch</span>
+                </div>
+                <div class="meta-item">
+                    <i class="fas fa-film"></i>
+                    <span>Genre: Action, Fantasy, Animation</span>
+                </div>
+                <div class="meta-item">
+                    <i class="fas fa-list-ol"></i>
+                    <span>Staffel 1, Episode 4</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="episode-navigation">
+            <a href="episode3.html" class="nav-btn">
+                <i class="fas fa-arrow-left"></i>
+                Vorherige Episode
+            </a>
+            <a href="index.html" class="nav-btn">
+                <i class="fas fa-list"></i>
+                Episodenliste
+            </a>
+            <a href="episode5.html" class="nav-btn">
+                Nächste Episode
+                <i class="fas fa-arrow-right"></i>
+            </a>
+        </div>
+    </main>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const video = document.getElementById('mainPlayer');
+            const playPauseBtn = document.querySelector('.play-pause');
+            const volumeBtn = document.querySelector('.volume');
+            const volumeSlider = document.querySelector('.volume-slider');
+            const fullscreenBtn = document.querySelector('.fullscreen');
+            const progressBar = document.querySelector('.progress-bar');
+            const progressFilled = document.querySelector('.progress-filled');
+            const timeDisplay = document.querySelector('.time-display');
+            let lastVolume = 1;
+
+            // Play/Pause
+            playPauseBtn.addEventListener('click', togglePlay);
+            video.addEventListener('click', togglePlay);
+
+            function togglePlay() {
+                if (video.paused) {
+                    video.play();
+                    playPauseBtn.innerHTML = '<i class="fas fa-pause"></i>';
+                } else {
+                    video.pause();
+                    playPauseBtn.innerHTML = '<i class="fas fa-play"></i>';
+                }
+            }
+
+            // Volume
+            volumeBtn.addEventListener('click', toggleMute);
+            volumeSlider.addEventListener('input', handleVolumeChange);
+
+            function toggleMute() {
+                if (video.volume > 0) {
+                    lastVolume = video.volume;
+                    video.volume = 0;
+                    volumeSlider.value = 0;
+                    volumeBtn.innerHTML = '<i class="fas fa-volume-mute"></i>';
+                } else {
+                    video.volume = lastVolume;
+                    volumeSlider.value = lastVolume;
+                    volumeBtn.innerHTML = '<i class="fas fa-volume-up"></i>';
+                }
+            }
+
+            function handleVolumeChange() {
+                video.volume = this.value;
+                if (this.value > 0) {
+                    volumeBtn.innerHTML = '<i class="fas fa-volume-up"></i>';
+                } else {
+                    volumeBtn.innerHTML = '<i class="fas fa-volume-mute"></i>';
+                }
+            }
+
+            // Progress Bar
+            video.addEventListener('timeupdate', handleProgress);
+            progressBar.addEventListener('click', scrub);
+
+            function handleProgress() {
+                const percent = (video.currentTime / video.duration) * 100;
+                progressFilled.style.width = `${percent}%`;
+                timeDisplay.textContent = `${formatTime(video.currentTime)} / ${formatTime(video.duration)}`;
+            }
+
+            function scrub(e) {
+                const scrubTime = (e.offsetX / progressBar.offsetWidth) * video.duration;
+                video.currentTime = scrubTime;
+            }
+
+            // Fullscreen
+            fullscreenBtn.addEventListener('click', toggleFullscreen);
+
+            function toggleFullscreen() {
+                if (!document.fullscreenElement) {
+                    video.requestFullscreen();
+                    fullscreenBtn.innerHTML = '<i class="fas fa-compress"></i>';
+                } else {
+                    document.exitFullscreen();
+                    fullscreenBtn.innerHTML = '<i class="fas fa-expand"></i>';
+                }
+            }
+
+            // Time Format
+            function formatTime(seconds) {
+                const minutes = Math.floor(seconds / 60);
+                seconds = Math.floor(seconds % 60);
+                return `${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
+            }
+
+            // Skip-Buttons
+            const rewindBtn = document.querySelector('.rewind');
+            const forwardBtn = document.querySelector('.forward');
+
+            rewindBtn.addEventListener('click', () => skipTime(-10));
+            forwardBtn.addEventListener('click', () => skipTime(10));
+
+            function skipTime(seconds) {
+                video.currentTime = Math.max(0, Math.min(video.currentTime + seconds, video.duration));
+            }
+
+            // Verhindere Rechtsklick auf dem Video
+            video.addEventListener('contextmenu', function(e) {
+                e.preventDefault();
+                return false;
+            });
+
+            // Verhindere Tastenkombinationen zum Speichern
+            document.addEventListener('keydown', function(e) {
+                if (e.ctrlKey && (e.key === 's' || e.key === 'S')) {
+                    e.preventDefault();
+                    return false;
+                }
+            });
+        });
+    </script>
+</body>
+</html> 

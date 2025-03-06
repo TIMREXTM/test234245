@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Solo Leveling - Episode 3 - Aniverse</title>
+    <link rel="stylesheet" href="../../style.css">
+    <link rel="stylesheet" href="../../player.css">
+    <link rel="stylesheet" href="../../mobile-menu.css">
+    <link rel="icon" href="../../images/aniverse-icon.ico">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        /* Anpassung der Abstände */
+        main.player-page {
+            padding-top: 120px;
+            max-width: 1400px;
+            margin: 0 auto;
+            padding-left: 4rem;
+            padding-right: 4rem;
+        }
+
+        .video-container {
+            margin-top: 40px;
+            margin-bottom: 40px;
+            position: relative;
+            width: 100%;
+            max-width: 1400px;
+            margin-left: auto;
+            margin-right: auto;
+            background: #000;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.7);
+        }
+
+        .video-wrapper {
+            position: relative;
+            padding-bottom: 56.25%;
+            height: 0;
+            overflow: hidden;
+        }
+
+        iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: none;
+            border-radius: 12px;
+        }
+
+        .fullscreen-btn {
+            display: none;
+        }
+
+        .episode-info {
+            padding: 40px 20px;
+            color: white;
+            margin-top: 30px;
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 8px;
+        }
+
+        .episode-info h1 {
+            font-size: 2rem;
+            margin-bottom: 20px;
+            color: #e50914;
+        }
+
+        .episode-info p {
+            color: #e5e5e5;
+            font-size: 1.1rem;
+            line-height: 1.6;
+        }
+
+        .episode-navigation {
+            display: flex;
+            justify-content: space-between;
+            padding: 30px 20px;
+            margin-top: 40px;
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 8px;
+        }
+
+        .nav-btn {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: white;
+            text-decoration: none;
+            padding: 10px 20px;
+            border-radius: 4px;
+            background: rgba(255, 255, 255, 0.1);
+            transition: background 0.3s;
+        }
+
+        .nav-btn:hover {
+            background: rgba(229, 9, 20, 0.6);
+        }
+
+        header {
+            background: linear-gradient(to bottom, rgba(0,0,0,0.9) 60%, transparent);
+            padding: 1.5rem 0;
+            position: fixed;
+            width: 100%;
+            z-index: 1000;
+        }
+
+        @media (max-width: 768px) {
+            main.player-page {
+                padding-top: 100px;
+                padding-left: 1rem;
+                padding-right: 1rem;
+            }
+
+            .video-container {
+                margin-top: 20px;
+                margin-bottom: 20px;
+            }
+
+            .episode-info {
+                padding: 20px;
+            }
+
+            .episode-info h1 {
+                font-size: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav>
+            <a href="../../index.html" style="text-decoration: none;">
+                <div class="logo">Aniverse</div>
+            </a>
+            <button class="mobile-menu-btn" title="Menü öffnen/schließen">
+                <span class="bar"></span>
+                <span class="bar"></span>
+                <span class="bar"></span>
+            </button>
+            <div class="overlay"></div>
+            <ul>
+                <li><a href="../../index.html">Home</a></li>
+                <li><a href="../../#serien">Serien</a></li>
+                <li><a href="../../#filme">Filme</a></li>
+                <li><a href="../../#neu">Neu</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main class="player-page">
+        <div class="video-container">
+            <div class="video-wrapper">
+                <iframe 
+                    id="mainPlayer"
+                    src="https://drive.google.com/file/d/1T8ny3VVg7NEvabuU_PMAizaFmezZMjTD/preview?sharing=false"
+                    width="100%"
+                    height="100%"
+                    allow="autoplay"
+                    allowfullscreen
+                    style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: none;"
+                ></iframe>
+            </div>
+        </div>
+
+        <div class="episode-info">
+            <h1>Solo Leveling - Episode 3: Das ist ja wie in einem Game</h1>
+            <p>Sung Jin-Woo entdeckt seine neue mysteriöse Fähigkeit, die ihm erlaubt, wie in einem Videospiel zu leveln. Als schwächster Hunter beginnt er seinen Weg zur Stärke.</p>
+            
+            <div class="movie-meta">
+                <div class="meta-item">
+                    <i class="fas fa-clock"></i>
+                    <span>Länge: 24 Minuten</span>
+                </div>
+                <div class="meta-item">
+                    <i class="fas fa-star"></i>
+                    <span>FSK: 16</span>
+                </div>
+                <div class="meta-item">
+                    <i class="fas fa-language"></i>
+                    <span>Sprache: Deutsch</span>
+                </div>
+                <div class="meta-item">
+                    <i class="fas fa-film"></i>
+                    <span>Genre: Action, Fantasy, Animation</span>
+                </div>
+                <div class="meta-item">
+                    <i class="fas fa-list-ol"></i>
+                    <span>Staffel 1, Episode 3</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="episode-navigation">
+            <a href="episode2.html" class="nav-btn">
+                <i class="fas fa-arrow-left"></i>
+                Vorherige Episode
+            </a>
+            <a href="../sololeveling/index.html" class="nav-btn">
+                <i class="fas fa-list"></i>
+                Zur Übersicht
+            </a>
+            <a href="episode4.html" class="nav-btn">
+                Nächste Episode
+                <i class="fas fa-arrow-right"></i>
+            </a>
+        </div>
+    </main>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const iframe = document.getElementById('mainPlayer');
+            const menuBtn = document.querySelector('.mobile-menu-btn');
+            const menu = document.querySelector('nav ul');
+            const overlay = document.querySelector('.overlay');
+
+            // Mobile Menu Funktionalität
+            menuBtn.addEventListener('click', function() {
+                menuBtn.classList.toggle('active');
+                menu.classList.toggle('active');
+                overlay.classList.toggle('active');
+            });
+
+            overlay.addEventListener('click', function() {
+                menuBtn.classList.remove('active');
+                menu.classList.remove('active');
+                overlay.classList.remove('active');
+            });
+
+            // Schließe Menü bei Klick auf einen Link
+            document.querySelectorAll('nav ul li a').forEach(link => {
+                link.addEventListener('click', function() {
+                    menuBtn.classList.remove('active');
+                    menu.classList.remove('active');
+                    overlay.classList.remove('active');
+                });
+            });
+
+            // Video-Player Sicherheit
+            iframe.addEventListener('contextmenu', function(e) {
+                e.preventDefault();
+                return false;
+            });
+
+            document.addEventListener('keydown', function(e) {
+                if (e.ctrlKey && (e.key === 's' || e.key === 'S')) {
+                    e.preventDefault();
+                    return false;
+                }
+            });
+        });
+    </script>
+</body>
+</html> 

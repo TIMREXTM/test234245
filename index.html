@@ -1,0 +1,744 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aniverse - Deine Streaming-Plattform</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="mobile-menu.css">
+    <link rel="icon" href="images/aniverse-icon.ico">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <script src="js/menu.js"></script>
+    <style>
+        :root {
+            --primary-color: #e50914;
+            --primary-hover: #f6121d;
+            --background-dark: #141414;
+            --card-bg: rgba(32, 32, 32, 0.8);
+            --text-light: #ffffff;
+            --text-gray: #b3b3b3;
+        }
+
+        .hero {
+            height: 80vh;
+            background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)),
+                        url('images/hero-bg.jpg') center/cover;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(45deg, rgba(229, 9, 20, 0.2), transparent);
+            z-index: 1;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            max-width: 800px;
+            padding: 0 2rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 1.5rem;
+        }
+
+        .hero h1 {
+            font-size: 4rem;
+            margin-bottom: 1.5rem;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+            animation: fadeInUp 0.8s ease;
+        }
+
+        .hero p {
+            font-size: 1.5rem;
+            color: var(--text-gray);
+            animation: fadeInUp 1s ease;
+        }
+
+        .featured {
+            padding: 4rem 2rem;
+            background: linear-gradient(to bottom, var(--background-dark), #1a1a1a);
+        }
+
+        .movie-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 2.5rem;
+            padding: 2rem 0;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .movie-card {
+            background: rgba(20, 20, 20, 0.95);
+            border-radius: 8px;
+            overflow: hidden;
+            transition: transform 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+        }
+
+        .movie-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 8px 25px rgba(229, 9, 20, 0.3);
+        }
+
+        .movie-thumbnail {
+            position: relative;
+            width: 100%;
+            height: 300px;
+        }
+
+        .movie-thumbnail img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .movie-info {
+            padding: 1.5rem;
+            display: flex;
+            flex-direction: column;
+            gap: 0.8rem;
+        }
+
+        .movie-info h3 {
+            font-size: 1.8rem;
+            color: #ffffff;
+            margin: 0;
+            line-height: 1.2;
+        }
+
+        .movie-description {
+            color: #cccccc;
+            font-size: 1rem;
+            line-height: 1.4;
+            margin: 0;
+        }
+
+        .movie-meta {
+            display: flex;
+            flex-direction: column;
+            gap: 0.3rem;
+            color: #999;
+            font-size: 0.9rem;
+        }
+
+        .movie-meta span {
+            display: block;
+        }
+
+        .movie-categories {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-top: 0.5rem;
+        }
+
+        .category-tag {
+            background: rgba(255, 255, 255, 0.1);
+            color: #fff;
+            padding: 0.3rem 0.8rem;
+            border-radius: 4px;
+            font-size: 0.85rem;
+        }
+
+        .watch-now {
+            background: #e50914;
+            color: white;
+            border: none;
+            padding: 1rem;
+            border-radius: 4px;
+            font-size: 1rem;
+            cursor: pointer;
+            width: 100%;
+            margin-top: 1rem;
+            transition: background-color 0.3s ease;
+        }
+
+        .watch-now:hover {
+            background: #f6121d;
+        }
+
+        .categories {
+            padding: 4rem 2rem;
+            background: linear-gradient(to top, var(--background-dark), #1a1a1a);
+        }
+
+        .category-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+            max-width: 1200px;
+            margin: 2rem auto;
+        }
+
+        .category-card {
+            background: var(--card-bg);
+            padding: 2rem;
+            border-radius: 12px;
+            text-align: center;
+            text-decoration: none;
+            color: var(--text-light);
+            transition: all 0.3s ease;
+            -webkit-backdrop-filter: blur(5px);
+            backdrop-filter: blur(5px);
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .category-card:hover {
+            background: rgba(229, 9, 20, 0.2);
+            transform: translateY(-5px);
+        }
+
+        .category-card i {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            color: var(--primary-color);
+        }
+
+        .category-card span {
+            font-size: 1.2rem;
+            font-weight: 500;
+        }
+
+        #clearFilter {
+            display: none;
+            margin: 2rem auto;
+            padding: 1rem 2rem;
+            background: var(--primary-color);
+            color: var(--text-light);
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1.1rem;
+            transition: all 0.3s ease;
+        }
+
+        #clearFilter.visible {
+            display: block;
+            animation: fadeIn 0.3s ease;
+        }
+
+        #clearFilter:hover {
+            background: var(--primary-hover);
+            transform: translateY(-2px);
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+            
+            .hero p {
+                font-size: 1.2rem;
+            }
+
+            .movie-grid {
+                grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+                gap: 1.5rem;
+                padding: 1rem;
+            }
+
+            .category-grid {
+                grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+                gap: 1rem;
+            }
+
+            .movie-info h3 {
+                font-size: 1.5rem;
+            }
+            
+            .movie-thumbnail {
+                height: 250px;
+            }
+        }
+
+        /* Neue Styles für die Suchleiste */
+        .search-container {
+            width: 100%;
+            max-width: 600px;
+            margin-top: 1rem;
+        }
+
+        .search-box {
+            display: flex;
+            gap: 0.5rem;
+            background: rgba(255, 255, 255, 0.15);
+            padding: 1rem;
+            border-radius: 50px;
+            backdrop-filter: blur(5px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .search-box:hover, .search-box:focus-within {
+            background: rgba(255, 255, 255, 0.2);
+            border-color: rgba(255, 255, 255, 0.2);
+            box-shadow: 0 0 20px rgba(229, 9, 20, 0.3);
+        }
+
+        #searchInput {
+            flex: 1;
+            background: transparent;
+            border: none;
+            color: white;
+            font-size: 1.1rem;
+            outline: none;
+            padding: 0 0.5rem;
+        }
+
+        #searchInput::placeholder {
+            color: rgba(255, 255, 255, 0.7);
+        }
+
+        .search-btn {
+            background: var(--primary-color);
+            border: none;
+            color: white;
+            cursor: pointer;
+            font-size: 1.2rem;
+            padding: 0.5rem 1.5rem;
+            border-radius: 25px;
+            transition: all 0.3s ease;
+        }
+
+        .search-btn:hover {
+            background: var(--primary-hover);
+            transform: scale(1.05);
+        }
+
+        .filter-tags {
+            display: flex;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+        }
+
+        #clearFilter {
+            display: inline-block;
+            padding: 0.5rem 1rem;
+            background: var(--primary-color);
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+        }
+
+        #clearFilter:hover {
+            background: var(--primary-hover);
+        }
+
+        .movie-card {
+            display: none;
+        }
+
+        .movie-card.visible {
+            display: block;
+            animation: fadeIn 0.5s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .title-container {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .title-container h2 {
+            margin-bottom: 1rem;
+        }
+
+        #clearFilter {
+            display: none;
+            padding: 0.8rem 2rem;
+            background: var(--primary-color);
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            margin: 1rem auto;
+        }
+
+        #clearFilter.visible {
+            display: inline-block;
+            animation: fadeIn 0.3s ease;
+        }
+
+        #clearFilter:hover {
+            background: var(--primary-hover);
+            transform: translateY(-2px);
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav>
+            <a href="index.html" class="logo-link">
+                <div class="logo">Aniverse</div>
+            </a>
+            <button class="mobile-menu-btn" title="Menü öffnen/schließen" aria-label="Menü">
+                <span class="bar"></span>
+                <span class="bar"></span>
+                <span class="bar"></span>
+            </button>
+            <div class="overlay" aria-hidden="true"></div>
+            <ul role="menu">
+                <li role="none"><a href="#home" role="menuitem">Home</a></li>
+                <li role="none"><a href="#serien" role="menuitem">Serien</a></li>
+                <li role="none"><a href="#filme" role="menuitem">Filme</a></li>
+                <li role="none"><a href="#neu" role="menuitem">Neu</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <section class="hero">
+            <div class="hero-content">
+                <h1>Willkommen bei Aniverse</h1>
+                <p>Entdecke die neuesten Filme und Serien</p>
+                <div class="search-container">
+                    <div class="search-box">
+                        <input type="text" id="searchInput" placeholder="Filme und Serien suchen...">
+                        <button class="search-btn" title="Suchen">
+                            <i class="fas fa-search"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="featured">
+            <div class="title-container">
+                <h2 id="sectionTitle">Trending</h2>
+                <button id="clearFilter" onclick="clearFilter()">Filter zurücksetzen</button>
+            </div>
+            <div class="movie-grid">
+                <div class="movie-card visible" data-categories="action,anime,fantasy">
+                    <a href="filme/sololeveling/index.html" style="text-decoration: none; color: inherit;">
+                        <div class="movie-thumbnail">
+                            <img src="images/sololeveling.png" alt="Solo Leveling">
+                        </div>
+                        <div class="movie-info">
+                            <h3>Solo Leveling</h3>
+                            <p class="movie-description">Ein schwacher Hunter wird zum mächtigsten der Welt.</p>
+                            <div class="movie-meta">
+                                <span>Staffeln: 2</span>
+                                <span>Sprache: Deutsch</span>
+                                <span>Altersfreigabe: 16+</span>
+                            </div>
+
+                            <div class="movie-categories">
+                                <span class="category-tag">Action</span>
+                                <span class="category-tag">Anime</span>
+                                <span class="category-tag">Fantasy</span>
+                            </div>
+                            <button class="watch-now">Jetzt anschauen</button>
+                        </div>
+                    </a>
+                </div>
+                <div class="movie-card visible" data-categories="action,anime,fantasy">
+                    <a href="filme/demonslayer/index.html" style="text-decoration: none; color: inherit;">
+                        <div class="movie-thumbnail">
+                            <img src="images/demonslayer.jpg" alt="Demon Slayer">
+                        </div>
+                        <div class="movie-info">
+                            <h3>Demon Slayer</h3>
+                            <p class="movie-description">Die Geschichte eines jungen Dämonenjägers auf der Suche nach Rache.</p>
+                            <div class="movie-meta">
+                                <span>Staffeln: 3</span>
+                                <span>Sprache: Deutsch</span>
+                                <span>Altersfreigabe: 16+</span>
+                            </div>                            
+                            <div class="movie-categories">
+                                <span class="category-tag">Action</span>
+                                <span class="category-tag">Anime</span>
+                                <span class="category-tag">Fantasy</span>
+                            </div>
+                            <button class="watch-now">Jetzt anschauen</button>
+                        </div>
+                    </a>
+                </div>
+                <div class="movie-card visible" data-categories="action,animation,adventure">
+                    <a href="filme/sonic3/index.html" style="text-decoration: none; color: inherit;">
+                        <div class="movie-thumbnail">
+                            <img src="images/sonic3.jpg" alt="Sonic the Hedgehog 3">
+                        </div>
+                        <div class="movie-info">
+                            <h3>Sonic the Hedgehog 3</h3>
+                            <p class="movie-description">Shadow the Hedgehog macht sein Debüt, während Sonic seine bisher größte Herausforderung meistern muss.</p>
+                            <div class="movie-meta">
+                                <span>Länge: 112 min</span>
+                                <span>Sprache: Deutsch</span>
+                                <span>Altersfreigabe: 6+</span>
+                            </div>
+                            <div class="movie-categories">
+                                <span class="category-tag">Action</span>
+                                <span class="category-tag">Animation</span>
+                                <span class="category-tag">Adventure</span>
+                            </div>
+                            <button class="watch-now">Jetzt anschauen</button>
+                        </div>
+                    </a>
+                </div>
+                <div class="movie-card visible" data-categories="action,sci-fi,thriller">
+                    <a href="filme/venom3/index.html" style="text-decoration: none; color: inherit;">
+                        <div class="movie-thumbnail">
+                            <img src="images/venomthelastdance.jpg" alt="Venom: The Last Dance">
+                        </div>
+                        <div class="movie-info">
+                            <h3>Venom: The Last Dance</h3>
+                            <p class="movie-description">Eddie Brock und Venom stellen sich ihrer bisher gefährlichsten Bedrohung, während die Grenzen zwischen Held und Antiheld verschwimmen.</p>
+                            <div class="movie-meta">
+                                <span>Länge: 110 min</span>
+                                <span>Sprache: Deutsch</span>
+                                <span>Altersfreigabe: 16+</span>
+                            </div>                            
+                            <div class="movie-categories">
+                                <span class="category-tag">Action</span>
+                                <span class="category-tag">Sci-Fi</span>
+                                <span class="category-tag">Thriller</span>
+                            </div>
+                            <button class="watch-now">Jetzt anschauen</button>
+                        </div>
+                    </a>
+                </div>
+                <div class="movie-card visible" data-categories="action,adventure,sci-fi">
+                    <a href="filme/captainamerica-bravenewworld/index.html" style="text-decoration: none; color: inherit;">
+                        <div class="movie-thumbnail">
+                            <img src="images/captainamerica-bravenewworld.jpg" alt="Captain America: Brave New World">
+                        </div>
+                        <div class="movie-info">
+                            <h3>Captain America: Brave New World</h3>
+                            <p class="movie-description">Ein neues Abenteuer erwartet Captain America in einer Welt voller Gefahren und Herausforderungen.</p>
+                            <div class="movie-meta">
+                                <span>Länge: 118 min</span>
+                                <span>Sprache: Deutsch</span>
+                                <span>Altersfreigabe: 16+</span>
+                            </div>
+                            <div class="movie-categories">
+                                <span class="category-tag">Action</span>
+                                <span class="category-tag">Adventure</span>
+                                <span class="category-tag">Sci-Fi</span>
+                            </div>
+                            <button class="watch-now">Jetzt anschauen</button>
+                        </div>
+                    </a>
+                </div>
+            </div>
+                
+            </div>
+        </section>
+
+        <section class="categories">
+            <h2>Kategorien</h2>
+            <div class="category-grid">
+                <!-- Vorhandene Kategorien -->
+                <a href="#" class="category-card" data-category="action" onclick="filterByCategory('action')">
+                    <i class="fas fa-fire"></i>
+                    <span>Action</span>
+                </a>
+                <a href="#" class="category-card" data-category="anime" onclick="filterByCategory('anime')">
+                    <i class="fas fa-dragon"></i>
+                    <span>Anime</span>
+                </a>
+                <a href="#" class="category-card" data-category="drama" onclick="filterByCategory('drama')">
+                    <i class="fas fa-theater-masks"></i>
+                    <span>Drama</span>
+                </a>
+                <a href="#" class="category-card" data-category="fantasy" onclick="filterByCategory('fantasy')">
+                    <i class="fas fa-hat-wizard"></i>
+                    <span>Fantasy</span>
+                </a>
+        
+                <!-- Neue Kategorien -->
+                <a href="#" class="category-card" data-category="romance" onclick="filterByCategory('romance')">
+                    <i class="fas fa-heart"></i>
+                    <span>Romance</span>
+                </a>
+                <a href="#" class="category-card" data-category="sci-fi" onclick="filterByCategory('sci-fi')">
+                    <i class="fas fa-rocket"></i>
+                    <span>Sci-Fi</span>
+                </a>
+                <a href="#" class="category-card" data-category="thriller" onclick="filterByCategory('thriller')">
+                    <i class="fas fa-user-secret"></i>
+                    <span>Thriller</span>
+                </a>
+                <a href="#" class="category-card" data-category="adventure" onclick="filterByCategory('adventure')">
+                    <i class="fas fa-hiking"></i>
+                    <span>Adventure</span>
+                </a>
+                <a href="#" class="category-card" data-category="comedy" onclick="filterByCategory('comedy')">
+                    <i class="fas fa-laugh"></i>
+                    <span>Comedy</span>
+                </a>
+                <a href="#" class="category-card" data-category="horror" onclick="filterByCategory('horror')">
+                    <i class="fas fa-ghost"></i>
+                    <span>Horror</span>
+                </a>
+                <a href="#" class="category-card" data-category="mystery" onclick="filterByCategory('mystery')">
+                    <i class="fas fa-search"></i>
+                    <span>Mystery</span>
+                </a>
+                <a href="#" class="category-card" data-category="animation" onclick="filterByCategory('animation')">
+                    <i class="fas fa-film"></i>
+                    <span>Animation</span>
+                </a>
+                <a href="#" class="category-card" data-category="family" onclick="filterByCategory('family')">
+                    <i class="fas fa-users"></i>
+                    <span>Family</span>
+                </a>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="footer-content">
+            <div class="logo">Aniverse</div>
+            <p>&copy; 2024 Aniverse. Alle Rechte vorbehalten.</p>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const searchInput = document.getElementById('searchInput');
+            const movies = document.querySelectorAll('.movie-card');
+            const sectionTitle = document.getElementById('sectionTitle');
+
+            // Suchfunktion
+            searchInput.addEventListener('input', function() {
+                const searchTerm = this.value.toLowerCase();
+                filterMovies(searchTerm);
+            });
+
+            function filterMovies(searchTerm = '', category = '') {
+                let hasVisibleMovies = false;
+                
+                movies.forEach(movie => {
+                    const title = movie.querySelector('h3').textContent.toLowerCase();
+                    const description = movie.querySelector('.movie-description').textContent.toLowerCase();
+                    const categories = movie.dataset.categories.split(',');
+                    
+                    const matchesSearch = searchTerm === '' || 
+                        title.includes(searchTerm) || 
+                        description.includes(searchTerm);
+                        
+                    const matchesCategory = category === '' || 
+                        categories.includes(category);
+
+                    if (matchesSearch && matchesCategory) {
+                        movie.classList.add('visible');
+                        hasVisibleMovies = true;
+                    } else {
+                        movie.classList.remove('visible');
+                    }
+                });
+
+                // Update Titel basierend auf Suche/Filter
+                updateSectionTitle(searchTerm, category, hasVisibleMovies);
+            }
+
+            function updateSectionTitle(searchTerm, category, hasResults) {
+                if (!hasResults) {
+                    sectionTitle.textContent = 'Keine Ergebnisse gefunden';
+                    return;
+                }
+                
+                if (searchTerm) {
+                    sectionTitle.textContent = `Suchergebnisse für "${searchTerm}"`;
+                } else if (category) {
+                    sectionTitle.textContent = category.charAt(0).toUpperCase() + category.slice(1);
+                } else {
+                    sectionTitle.textContent = 'Trending';
+                }
+            }
+
+            // Kategorie-Filter
+            window.filterByCategory = function(category) {
+                searchInput.value = ''; // Reset search
+                filterMovies('', category);
+                
+                // Update active state of category buttons
+                document.querySelectorAll('.category-card').forEach(button => {
+                    if (button.dataset.category === category) {
+                        button.classList.add('active');
+                        document.getElementById('clearFilter').classList.add('visible');
+                    } else {
+                        button.classList.remove('active');
+                    }
+                });
+            }
+
+            // Filter zurücksetzen
+            window.clearFilter = function() {
+                searchInput.value = '';
+                filterMovies();
+                document.querySelectorAll('.category-card').forEach(button => {
+                    button.classList.remove('active');
+                });
+                document.getElementById('clearFilter').classList.remove('visible');
+                sectionTitle.textContent = 'Trending';
+            }
+
+            // Mobile Menu Funktionalität
+            const menuBtn = document.querySelector('.mobile-menu-btn');
+            const menu = document.querySelector('nav ul');
+            const overlay = document.querySelector('.overlay');
+
+            menuBtn.addEventListener('click', function() {
+                menuBtn.classList.toggle('active');
+                menu.classList.toggle('active');
+                overlay.classList.toggle('active');
+            });
+
+            overlay.addEventListener('click', function() {
+                menuBtn.classList.remove('active');
+                menu.classList.remove('active');
+                overlay.classList.remove('active');
+            });
+
+            // Schließe Menü bei Klick auf einen Link
+            document.querySelectorAll('nav ul li a').forEach(link => {
+                link.addEventListener('click', function() {
+                    menuBtn.classList.remove('active');
+                    menu.classList.remove('active');
+                    overlay.classList.remove('active');
+                });
+            });
+        });
+    </script>
+</body>
+</html> 

@@ -1,0 +1,554 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Solo Leveling - Aniverse</title>
+    <link rel="stylesheet" href="../../style.css">
+    <link rel="stylesheet" href="../../mobile-menu.css">
+    <link rel="icon" href="../../images/aniverse-icon.ico">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <script src="../../js/menu.js"></script>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            background: var(--background-dark);
+        }
+
+        .series-header {
+            position: relative;
+            padding-top: 0;
+            background: linear-gradient(to bottom, rgba(0,0,0,0.2), rgba(0,0,0,0.95)),
+                        url('../../images/sololeveling.png') center/cover;
+            height: 85vh;
+            display: flex;
+            align-items: flex-end;
+            padding-bottom: 4rem;
+        }
+
+        .series-info {
+            max-width: 65%;
+            margin-left: 8%;
+            padding: 2rem;
+            color: white;
+            position: relative;
+            z-index: 2;
+        }
+
+        .series-title {
+            font-size: 5rem;
+            margin-bottom: 1.5rem;
+            color: #e50914;
+            text-shadow: 3px 3px 6px rgba(0,0,0,0.8);
+            font-weight: bold;
+        }
+
+        .series-description {
+            font-size: 1.3rem;
+            line-height: 1.7;
+            margin-bottom: 2rem;
+            max-width: 800px;
+            color: rgba(255, 255, 255, 0.95);
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
+        }
+
+        .season-selection {
+            max-width: 84%;
+            margin: 2rem auto;
+            padding: 0;
+        }
+
+        .season-nav {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .season-label {
+            color: #fff;
+            font-size: 1.1rem;
+            font-weight: bold;
+        }
+
+        .season-buttons {
+            display: flex;
+            gap: 1rem;
+            margin: 0;
+        }
+
+        .season-btn {
+            padding: 0.5rem 1.5rem;
+            background: rgba(47, 47, 47, 0.7);
+            border: none;
+            color: white;
+            cursor: pointer;
+            border-radius: 4px;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .season-btn:hover {
+            background: #e50914;
+        }
+
+        .season-btn.active {
+            background: #e50914;
+        }
+
+        .episodes-container {
+            max-width: 84%;
+            margin: 0 auto;
+            padding: 0;
+            background: transparent;
+        }
+
+        .episode-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .episode-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 1.5rem;
+            background: rgba(47, 47, 47, 0.7);
+            margin-bottom: 0.5rem;
+            border-radius: 4px;
+            transition: background-color 0.3s ease;
+        }
+
+        .episode-item:hover {
+            background: rgba(47, 47, 47, 0.9);
+        }
+
+        .episode-number {
+            color: rgba(255, 255, 255, 0.7);
+            min-width: 80px;
+            font-size: 1rem;
+        }
+
+        .episode-title {
+            flex-grow: 1;
+            color: #fff;
+            padding: 0 2rem;
+            font-size: 1rem;
+        }
+
+        .play-button {
+            color: #e50914;
+            text-decoration: none;
+            font-size: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+            transition: background-color 0.3s ease;
+            background: transparent;
+        }
+
+        .play-button:hover {
+            background: rgba(229, 9, 20, 0.1);
+        }
+
+        .play-button span {
+            color: #e50914;
+        }
+
+        .season-content {
+            display: none;
+        }
+
+        .season-content.active {
+            display: block;
+        }
+
+        footer {
+            background: rgba(0,0,0,0.9);
+            padding: 2rem 0;
+            margin-top: auto;
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            text-align: center;
+            color: white;
+        }
+
+        @media (max-width: 1400px) {
+            .series-info {
+                max-width: 75%;
+            }
+
+            .episodes-container,
+            .season-selection {
+                max-width: 90%;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .series-header {
+                height: 60vh;
+                padding-top: 60px;
+            }
+
+            .series-info {
+                max-width: 100%;
+                margin-left: 0;
+                padding: 1.5rem;
+            }
+
+            .series-title {
+                font-size: 2.5rem;
+            }
+
+            .series-description {
+                font-size: 1rem;
+            }
+
+            .episodes-container {
+                max-width: 100%;
+                padding: 1rem;
+            }
+
+            .season-selection {
+                max-width: 100%;
+                padding: 0 1rem;
+            }
+
+            .season-nav {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 0.5rem;
+            }
+
+            .season-buttons {
+                width: 100%;
+            }
+
+            .season-btn {
+                flex: 1;
+                text-align: center;
+                padding: 0.8rem;
+                font-size: 1.1rem;
+            }
+
+            .episode-item {
+                flex-direction: column;
+                padding: 1rem;
+                gap: 0.8rem;
+                background: rgba(32, 32, 32, 0.95);
+            }
+
+            .episode-number {
+                font-size: 0.9rem;
+                color: rgba(255, 255, 255, 0.9);
+            }
+
+            .episode-title {
+                padding: 0;
+                font-size: 1rem;
+                line-height: 1.4;
+            }
+
+            .play-button {
+                width: 100%;
+                justify-content: center;
+                padding: 0.8rem;
+                background: rgba(229, 9, 20, 0.1);
+                font-size: 1.1rem;
+            }
+
+            .play-button:hover {
+                background: rgba(229, 9, 20, 0.2);
+            }
+
+            .play-button span {
+                font-weight: bold;
+            }
+        }
+
+        main {
+            background: #141414;
+            min-height: 100vh;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav>
+            <a href="../../index.html" class="logo-link">
+                <div class="logo">Aniverse</div>
+            </a>
+            <button class="mobile-menu-btn" title="Menü öffnen/schließen" aria-label="Menü">
+                <span class="bar"></span>
+                <span class="bar"></span>
+                <span class="bar"></span>
+            </button>
+            <div class="overlay" aria-hidden="true"></div>
+            <ul role="menu">
+                <li role="none"><a href="../../index.html" role="menuitem">Home</a></li>
+                <li role="none"><a href="../../#serien" role="menuitem">Serien</a></li>
+                <li role="none"><a href="../../#filme" role="menuitem">Filme</a></li>
+                <li role="none"><a href="../../#neu" role="menuitem">Neu</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <section class="series-header">
+            <div class="series-info">
+                <h1 class="series-title">Solo Leveling</h1>
+                <p class="series-description">
+                    In einer Welt, in der mysteriöse Portale erscheinen, folgen wir Sung Jin-Woo, dem schwächsten bekannten Hunter. Nach einem fast tödlichen Vorfall erhält er eine einzigartige Fähigkeit, die es ihm ermöglicht, in einem RPG-ähnlichen System zu leveln.
+                </p>
+            </div>
+        </section>
+
+        <section class="season-selection">
+            <div class="season-nav">
+                <span class="season-label">Staffeln:</span>
+                <div class="season-buttons">
+                    <button class="season-btn active" onclick="showSeason(1)">Staffel 1</button>
+                    <button class="season-btn" onclick="showSeason(2)">Staffel 2</button>
+                </div>
+            </div>
+        </section>
+
+        <section class="episodes-container">
+            <div id="season1" class="season-content active">
+                <ul class="episode-list">
+                    <li class="episode-item">
+                        <span class="episode-number">Folge 1</span>
+                        <span class="episode-title">Ich bin es bereits gewohnt - I'm Used to It</span>
+                        <a href="episode1.html" class="play-button">
+                            <span>Abspielen</span>
+                            <i class="fas fa-play"></i>
+                        </a>
+                    </li>
+                    <li class="episode-item">
+                        <span class="episode-number">Folge 2</span>
+                        <span class="episode-title">Wenn ich doch nur eine weitere Chance hätte - If I Had One More Chance</span>
+                        <a href="episode2.html" class="play-button">
+                            <span>Abspielen</span>
+                            <i class="fas fa-play"></i>
+                        </a>
+                    </li>
+                    <li class="episode-item">
+                        <span class="episode-number">Folge 3</span>
+                        <span class="episode-title">Das ist ja wie in einem Game - It's Like a Game</span>
+                        <a href="episode3.html" class="play-button">
+                            <span>Abspielen</span>
+                            <i class="fas fa-play"></i>
+                        </a>
+                    </li>
+                    <li class="episode-item">
+                        <span class="episode-number">Folge 4</span>
+                        <span class="episode-title">Ich muss stärker werden - I've Gotta Get Stronger</span>
+                        <a href="episode4.html" class="play-button">
+                            <span>Abspielen</span>
+                            <i class="fas fa-play"></i>
+                        </a>
+                    </li>
+                    <li class="episode-item">
+                        <span class="episode-number">Folge 5</span>
+                        <span class="episode-title">Ein ziemlich guter Deal - A Pretty Good Deal</span>
+                        <a href="episode5.html" class="play-button">
+                            <span>Abspielen</span>
+                            <i class="fas fa-play"></i>
+                        </a>
+                    </li>
+                    <li class="episode-item">
+                        <span class="episode-number">Folge 6</span>
+                        <span class="episode-title">Die wahre Jagd beginnt - The Real Hunt Begins</span>
+                        <a href="episode6.html" class="play-button">
+                            <span>Abspielen</span>
+                            <i class="fas fa-play"></i>
+                        </a>
+                    </li>
+                    <li class="episode-item">
+                        <span class="episode-number">Folge 7</span>
+                        <span class="episode-title">Dann teste ich doch mal meine Grenzen aus - Let's See How Far I Can Go</span>
+                        <a href="episode7.html" class="play-button">
+                            <span>Abspielen</span>
+                            <i class="fas fa-play"></i>
+                        </a>
+                    </li>
+                    <li class="episode-item">
+                        <span class="episode-number">Folge 8</span>
+                        <span class="episode-title">Das ist so frustrierend - This Is Frustrating</span>
+                        <a href="episode8.html" class="play-button">
+                            <span>Abspielen</span>
+                            <i class="fas fa-play"></i>
+                        </a>
+                    </li>
+                    <li class="episode-item">
+                        <span class="episode-number">Folge 9</span>
+                        <span class="episode-title">Du hast dein Talent verheimlicht - You've Been Hiding Your Skills</span>
+                        <a href="episode9.html" class="play-button">
+                            <span>Abspielen</span>
+                            <i class="fas fa-play"></i>
+                        </a>
+                    </li>
+                    <li class="episode-item">
+                        <span class="episode-number">Folge 10</span>
+                        <span class="episode-title">Soll das ein Picknick sein? - What Is This, a Picnic?</span>
+                        <a href="episode10.html" class="play-button">
+                            <span>Abspielen</span>
+                            <i class="fas fa-play"></i>
+                        </a>
+                    </li>
+                    <li class="episode-item">
+                        <span class="episode-number">Folge 11</span>
+                        <span class="episode-title">Ein Ritter, der einen leeren Thron beschützt - A Knight Who Defends an Empty Throne</span>
+                        <a href="episode11.html" class="play-button">
+                            <span>Abspielen</span>
+                            <i class="fas fa-play"></i>
+                        </a>
+                    </li>
+                    <li class="episode-item">
+                        <span class="episode-number">Folge 12</span>
+                        <span class="episode-title">Erhebt euch - Arise</span>
+                        <a href="episode12.html" class="play-button">
+                            <span>Abspielen</span>
+                            <i class="fas fa-play"></i>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+            <div id="season2" class="season-content">
+                <ul class="episode-list">
+                    <li class="episode-item">
+                        <span class="episode-number">Folge 1</span>
+                        <span class="episode-title">Du bist gar nicht auf dem E-Rang, oder? - You Aren't E-Rank, Are You?</span>
+                        <a href="staffel2/episode1.html" class="play-button">
+                            <span>Abspielen</span>
+                            <i class="fas fa-play"></i>
+                        </a>
+                    </li>
+                    <li class="episode-item">
+                        <span class="episode-number">Folge 2</span>
+                        <span class="episode-title">Das war dir wohl nicht bewusst - I Suppose You Aren't Aware</span>
+                        <a href="staffel2/episode2.html" class="play-button">
+                            <span>Abspielen</span>
+                            <i class="fas fa-play"></i>
+                        </a>
+                    </li>
+                    <li class="episode-item">
+                        <span class="episode-number">Folge 3</span>
+                        <span class="episode-title">Es liegt noch ein langer Weg vor mir - Still a Long Way to Go</span>
+                        <a href="staffel2/episode3.html" class="play-button">
+                            <span>Abspielen</span>
+                            <i class="fas fa-play"></i>
+                        </a>
+                    </li>
+                    <li class="episode-item">
+                        <span class="episode-number">Folge 4</span>
+                        <span class="episode-title">Ich muss aufhören, anderen nur etwas vorzuspielen - I Need to Stop Faking</span>
+                        <a href="staffel2/episode4.html" class="play-button">
+                            <span>Abspielen</span>
+                            <i class="fas fa-play"></i>
+                        </a>
+                    </li>
+                    <li class="episode-item">
+                        <span class="episode-number">Folge 5</span>
+                        <span class="episode-title">Dafür wurden wir ausgebildet - This Is What We're Trained to Do</span>
+                        <a href="staffel2/episode5.html" class="play-button">
+                            <span>Abspielen</span>
+                            <i class="fas fa-play"></i>
+                        </a>
+                    </li>
+                    <li class="episode-item">
+                        <span class="episode-number">Folge 6</span>
+                        <span class="episode-title">私の仲間を見下すな - Don't Look Down on My Guys</span>
+                        <a href="staffel2/episode6.html" class="play-button">
+                            <span>Abspielen</span>
+                            <i class="fas fa-play"></i>
+                        </a>
+                    </li>
+                    <li class="episode-item">
+                        <span class="episode-number">Folge 7</span>
+                        <span class="episode-title">第10位のSランクハンター - The 10th S-Rank Hunter</span>
+                        <a href="staffel2/episode7.html" class="play-button">
+                            <span>Abspielen</span>
+                            <i class="fas fa-play"></i>
+                        </a>
+                    </li>
+                    <li class="episode-item">
+                        <span class="episode-number">Folge 8</span>
+                        <span class="episode-title">見上げるのに疲れた - Looking Up Was Tiring Me Out</span>
+                        <a href="staffel2/episode8.html" class="play-button">
+                            <span>Abspielen</span>
+                            <i class="fas fa-play"></i>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="footer-content">
+            <div class="logo">Aniverse</div>
+            <p>&copy; 2024 Aniverse. Alle Rechte vorbehalten.</p>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const menuBtn = document.querySelector('.mobile-menu-btn');
+            const menu = document.querySelector('nav ul');
+            const overlay = document.querySelector('.overlay');
+
+            // Mobile Menu Funktionalität
+            menuBtn.addEventListener('click', function() {
+                menuBtn.classList.toggle('active');
+                menu.classList.toggle('active');
+                overlay.classList.toggle('active');
+            });
+
+            overlay.addEventListener('click', function() {
+                menuBtn.classList.remove('active');
+                menu.classList.remove('active');
+                overlay.classList.remove('active');
+            });
+
+            // Schließe Menü bei Klick auf einen Link
+            document.querySelectorAll('nav ul li a').forEach(link => {
+                link.addEventListener('click', function() {
+                    menuBtn.classList.remove('active');
+                    menu.classList.remove('active');
+                    overlay.classList.remove('active');
+                });
+            });
+        });
+
+        function showSeason(seasonNumber) {
+            // Alle Staffeln ausblenden
+            document.querySelectorAll('.season-content').forEach(content => {
+                content.classList.remove('active');
+            });
+            
+            // Alle Staffel-Buttons deaktivieren
+            document.querySelectorAll('.season-btn').forEach(button => {
+                button.classList.remove('active');
+            });
+            
+            // Gewählte Staffel anzeigen
+            document.getElementById('season' + seasonNumber).classList.add('active');
+            
+            // Gewählten Button aktivieren
+            document.querySelectorAll('.season-btn')[seasonNumber - 1].classList.add('active');
+        }
+    </script>
+</body>
+</html> 

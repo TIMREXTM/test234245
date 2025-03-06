@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Happy Marriage - Episode 1 - Aniverse</title>
+    <link rel="stylesheet" href="../../style.css">
+    <link rel="stylesheet" href="../../player.css">
+    <link rel="stylesheet" href="../../mobile-menu.css">
+    <link rel="icon" href="../../images/aniverse-icon.ico">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <script src="../../js/menu.js"></script>
+    <style>
+        /* Anpassung der Abstände */
+        main.player-page {
+            padding-top: 120px; /* Erhöhter Abstand von der Navigation */
+            max-width: 1400px;
+            margin: 0 auto;
+            padding-left: 4rem;
+            padding-right: 4rem;
+        }
+
+        .video-container {
+            margin-top: 40px;
+            margin-bottom: 40px;
+            position: relative;
+            width: 100%;
+            max-width: 1400px;
+            margin-left: auto;
+            margin-right: auto;
+            background: #000;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.7);
+        }
+
+        .video-wrapper {
+            position: relative;
+            padding-bottom: 56.25%;
+            height: 0;
+            overflow: hidden;
+        }
+
+        /* Stil für das iframe */
+        iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: none;
+            border-radius: 12px;
+        }
+
+        /* Entferne den Vollbild-Button Style */
+        .fullscreen-btn {
+            display: none;
+        }
+
+        .episode-info {
+            padding: 40px 20px; /* Mehr Padding */
+            color: white;
+            margin-top: 30px; /* Zusätzlicher Abstand */
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 8px;
+        }
+
+        .episode-info h1 {
+            font-size: 2rem; /* Größere Überschrift */
+            margin-bottom: 20px;
+            color: #e50914;
+        }
+
+        .episode-info p {
+            color: #e5e5e5;
+            font-size: 1.1rem; /* Größere Schrift */
+            line-height: 1.6;
+        }
+
+        .episode-navigation {
+            display: flex;
+            justify-content: space-between;
+            padding: 30px 20px;
+            margin-top: 40px;
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 8px;
+        }
+
+        .nav-btn {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: white;
+            text-decoration: none;
+            padding: 10px 20px;
+            border-radius: 4px;
+            background: rgba(255, 255, 255, 0.1);
+            transition: background 0.3s;
+        }
+
+        .nav-btn:hover {
+            background: rgba(229, 9, 20, 0.6);
+        }
+
+        header {
+            background: linear-gradient(to bottom, rgba(0,0,0,0.9) 60%, transparent);
+            padding: 1.5rem 0;
+            position: fixed;
+            width: 100%;
+            z-index: 1000;
+        }
+
+        /* Responsive Anpassungen */
+        @media (max-width: 768px) {
+            main.player-page {
+                padding-top: 100px;
+                padding-left: 1rem;
+                padding-right: 1rem;
+            }
+
+            .video-container {
+                margin-top: 20px;
+                margin-bottom: 20px;
+            }
+
+            .episode-info {
+                padding: 20px;
+            }
+
+            .episode-info h1 {
+                font-size: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav>
+            <a href="../../index.html" class="logo-link">
+                <div class="logo">Aniverse</div>
+            </a>
+            <button class="mobile-menu-btn" title="Menü öffnen/schließen" aria-label="Menü">
+                <span class="bar"></span>
+                <span class="bar"></span>
+                <span class="bar"></span>
+            </button>
+            <div class="overlay" aria-hidden="true"></div>
+            <ul role="menu">
+                <li role="none"><a href="../../index.html" role="menuitem">Home</a></li>
+                <li role="none"><a href="../../#serien" role="menuitem">Serien</a></li>
+                <li role="none"><a href="../../#filme" role="menuitem">Filme</a></li>
+                <li role="none"><a href="../../#neu" role="menuitem">Neu</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main class="player-page">
+        <div class="video-container">
+            <div class="video-wrapper">
+                <iframe 
+                    id="mainPlayer"
+                    src="blob:https://www.netflix.com/59f5b3d9-d444-4e6e-950d-04924e842473"
+                    width="100%"
+                    height="100%"
+                    allow="autoplay"
+                    allowfullscreen
+                    style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: none;"
+                ></iframe>
+            </div>
+        </div>
+
+        <div class="episode-info">
+            <h1>My Happy Marriage - Episode 1: Ein neues Zuhause</h1>
+            <p>In der ersten Episode lernen wir Miyo Saimori kennen, eine junge Frau, die in einer lieblosen Familie aufwächst. Als sie mit Kiyoka Kudou, einem kaltherzigen Militäroffizier, verheiratet wird, beginnt eine Geschichte voller Emotionen, Geheimnisse und unerwarteter Liebe.</p>
+            
+            <div class="movie-meta">
+                <div class="meta-item">
+                    <i class="fas fa-clock"></i>
+                    <span>Länge: 24 Minuten</span>
+                </div>
+                <div class="meta-item">
+                    <i class="fas fa-star"></i>
+                    <span>FSK: 12</span>
+                </div>
+                <div class="meta-item">
+                    <i class="fas fa-language"></i>
+                    <span>Sprache: Deutsch</span>
+                </div>
+                <div class="meta-item">
+                    <i class="fas fa-film"></i>
+                    <span>Genre: Drama, Romantik, Fantasy</span>
+                </div>
+                <div class="meta-item">
+                    <i class="fas fa-list-ol"></i>
+                    <span>Staffel 1, Episode 1</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="episode-navigation">
+            <a href="../my-happy-marriage/index.html" class="nav-btn">
+                <i class="fas fa-arrow-left"></i>
+                Zurück zur Übersicht
+            </a>
+            <a href="../my-happy-marriage/episode2.html" class="nav-btn">
+                Nächste Episode
+                <i class="fas fa-arrow-right"></i>
+            </a>
+        </div>
+    </main>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const iframe = document.getElementById('mainPlayer');
+            const menuBtn = document.querySelector('.mobile-menu-btn');
+            const menu = document.querySelector('nav ul');
+            const overlay = document.querySelector('.overlay');
+
+            // Mobile Menu Funktionalität
+            menuBtn.addEventListener('click', function() {
+                menuBtn.classList.toggle('active');
+                menu.classList.toggle('active');
+                overlay.classList.toggle('active');
+            });
+
+            overlay.addEventListener('click', function() {
+                menuBtn.classList.remove('active');
+                menu.classList.remove('active');
+                overlay.classList.remove('active');
+            });
+
+            // Schließe Menü bei Klick auf einen Link
+            document.querySelectorAll('nav ul li a').forEach(link => {
+                link.addEventListener('click', function() {
+                    menuBtn.classList.remove('active');
+                    menu.classList.remove('active');
+                    overlay.classList.remove('active');
+                });
+            });
+
+            // Bestehender Video-Player Code
+            iframe.addEventListener('contextmenu', function(e) {
+                e.preventDefault();
+                return false;
+            });
+
+            document.addEventListener('keydown', function(e) {
+                if (e.ctrlKey && (e.key === 's' || e.key === 'S')) {
+                    e.preventDefault();
+                    return false;
+                }
+            });
+        });
+    </script>
+</body>
+</html>
